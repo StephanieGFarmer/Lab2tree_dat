@@ -79,19 +79,17 @@ glimpse(tree_dat)
 
 ```
 #Question 14: 
-Mean_BA_m2 is 3.6966
+Mean_BA_m2 is 0.0369.
 ```{r}
-tree_dat <- tree_dat %>%
-  mutate(DBH_cm = rad_ib_mm * 2)  
-tree_dat <- tree_dat %>%
-  mutate(
-    BA_m2 = 0.00007854 * (DBH_cm^2)  
-  )
-mean_BA_POTR_2007 <- tree_dat %>%
-  filter(species == "POTR", year == 2007) %>%  
-  summarize(mean_BA_m2 = mean(BA_m2, na.rm = TRUE)) 
+tree_dat <- tree_dat %>% 
+  mutate(rad_ib_cm = rad_ib_mm/10,
+         DBH_cm = rad_ib_cm*2, 
+         BA_m2 = 0.00007854 * DBH_cm^2)
 
-print(mean_BA_POTR_2007)
+temp <- filter(tree_dat, species == 'POTR')
+temp <- filter(temp, year == 2007)
+
+mean(temp$BA_m2)
 
 ```
 #Question 15: 
